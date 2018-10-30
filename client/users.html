@@ -1,0 +1,214 @@
+<div ng-controller="userCtrl" ng-init="showUser()">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">AdminStrap</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active">
+                        <a href="#/admin">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#/users">Users</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a>Welcome, Ankit</a>
+                    </li>
+                    <li>
+                        <a href="#/">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <header id="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <h1>
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Dashboard
+                        <small>Manage Your Site</small>
+                    </h1>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <section id="breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="active">Dashboard</li>
+                <button type="button" data-toggle="modal" ng-click="reset()" data-target="#addUser" style="margin-top:-6px"
+                    class="btn btn-info pull-right">ADD
+                    User</button>
+
+            </ol>
+
+        </div>
+        <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="myModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form ng-submit="addUser()">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModal">Add User</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" class="form-control" placeholder="name" ng-model="name" ng-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label>Phono_no</label>
+                                <input type="number" class="form-control" placeholder="phone_no" ng-model="phone"
+                                    ng-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" placeholder="email" ng-model="email"
+                                    ng-required="true">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="text" class="form-control" placeholder="password" ng-model="password"
+                                    ng-required="true">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="list-group">
+                    <a href="#/admin" class="list-group-item active main-color-bg">
+                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Dashboard
+                    </a>
+                    <a href="#/admin" class="list-group-item">
+                        <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Questions
+
+                    </a>
+                    <a href="#/users" class="list-group-item">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Users
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="panel panel-default">
+                    <div class="panel-heading main-color-bg">
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <h3 class="panel-title">Users</h3>
+                            </div>
+                            <div class="col-sm-2">
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input class="form-control" type="text" placeholder="Filter Users..." ng-model="filterbyname">
+                            </div>
+                        </div>
+                        <br>
+                        <table class="table table-striped table-hover table-responsive">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Phone_no</th>
+                                <th>Email_Id</th>
+                                <th>Password</th>
+                                <th>Actions</th>
+
+                            </tr>
+                            <tr ng-repeat="user in users |filter :filterbyname">
+                                <td>{{user._id}}</td>
+                                <td>{{user.name}}</td>
+                                <td>{{user.phone}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.password}}</td>
+
+                                <td>
+                                    <a class="btn btn-default" data-toggle="modal" data-target="#edituser" ng-click="edituser(user)">Edit</a>
+                                    <a class="btn btn-danger" ng-click="delUser($index,user._id)">Del</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+
+
+
+                <div class="modal fade" id="edituser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <form ng-submit="updateUser(id)">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">Edit User</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control" placeholder="Name" ng-model="name"
+                                            ng-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Phono_no</label>
+                                        <input type="text" class="form-control" placeholder="phone_no" ng-model="phone"
+                                            ng-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control" placeholder="email" ng-model="email"
+                                            ng-required="true">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="tex" class="form-control" placeholder="password" ng-model="password"
+                                            ng-required="true">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
